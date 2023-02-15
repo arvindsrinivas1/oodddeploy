@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2023_02_15_063537) do
 
-  create_table "admins", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "admins", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2023_02_15_063537) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
-  create_table "books", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "books", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "author"
     t.string "publisher"
@@ -36,7 +36,37 @@ ActiveRecord::Schema.define(version: 2023_02_15_063537) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "reviews", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "cart_details", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "quantity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "book_id", null: false
+    t.bigint "cart_id", null: false
+    t.index ["book_id"], name: "index_cart_details_on_book_id"
+    t.index ["cart_id"], name: "index_cart_details_on_cart_id"
+  end
+
+  create_table "carts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
+  create_table "purchases", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.decimal "credit_card", precision: 10
+    t.decimal "phone_number", precision: 10
+    t.text "address"
+    t.decimal "total_price", precision: 10
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.bigint "cart_id", null: false
+    t.index ["cart_id"], name: "index_purchases_on_cart_id"
+    t.index ["user_id"], name: "index_purchases_on_user_id"
+  end
+
+  create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "rating"
     t.text "review"
     t.datetime "created_at", precision: 6, null: false
@@ -49,22 +79,7 @@ ActiveRecord::Schema.define(version: 2023_02_15_063537) do
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
-  create_table "transactions", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "transaction_number", limit: 10
-    t.string "credit_card_number", limit: 16
-    t.string "address"
-    t.string "phone_no", limit: 10
-    t.integer "quantity"
-    t.decimal "total_price", precision: 10
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id", null: false
-    t.bigint "book_id", null: false
-    t.index ["book_id"], name: "index_transactions_on_book_id"
-    t.index ["user_id"], name: "index_transactions_on_user_id"
-  end
-
-  create_table "users", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -81,7 +96,7 @@ ActiveRecord::Schema.define(version: 2023_02_15_063537) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "views", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "views", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -93,9 +108,12 @@ ActiveRecord::Schema.define(version: 2023_02_15_063537) do
     t.index ["reset_password_token"], name: "index_views_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "cart_details", "books"
+  add_foreign_key "cart_details", "carts"
+  add_foreign_key "carts", "users"
+  add_foreign_key "purchases", "carts"
+  add_foreign_key "purchases", "users"
   add_foreign_key "reviews", "admins"
   add_foreign_key "reviews", "books"
   add_foreign_key "reviews", "users"
-  add_foreign_key "transactions", "books"
-  add_foreign_key "transactions", "users"
 end

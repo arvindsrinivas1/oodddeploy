@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Credit card:</strong>
+  <%= @purchase.credit_card %>
+</p>
+
+<p>
+  <strong>Phone number:</strong>
+  <%= @purchase.phone_number %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @purchase.address %>
+</p>
+
+<p>
+  <strong>Total price:</strong>
+  <%= @purchase.total_price %>
+</p>
+
+<%= link_to 'Home', root_path %>
+<%= link_to 'All Transactions', purchases_path %>

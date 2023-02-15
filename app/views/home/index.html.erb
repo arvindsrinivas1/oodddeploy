@@ -15,9 +15,15 @@ Welcome, <%= current_admin.name.capitalize %>
 
 <% elsif current_user.present? %>
 Welcome <%= current_user.email %>
-
+<br>
 <%= link_to 'View Books', books_path %>
+<br>
 <%= link_to 'View Reviews', reviews_path %>
+<br>
+<%= link_to 'View Cart', cart_details_path %>
+<br>
+<%= link_to 'View Previous Transactions', purchases_path %>
+<br>
 <%= link_to 'Logout', destroy_user_session_path %>
 <%= link_to 'Edit Profile', edit_user_url(current_user) %>
 <%= button_to 'Delete Profile', user_path(current_user), method: :delete, data: { confirm: 'Are you sure?' } %>

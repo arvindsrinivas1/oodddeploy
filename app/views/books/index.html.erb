@@ -1,4 +1,3 @@
-
 <%= form_tag("/books", method: "get") do %>
   <%= label_tag(:author, "Author") %>
   <%= text_field_tag(:author) %>
@@ -47,3 +46,4 @@
 <% if(current_user.present? or current_admin.present?) %>
       <%= link_to 'Home', root_path %>
 <% end %>
+<%= link_to 'Home', root_path %>

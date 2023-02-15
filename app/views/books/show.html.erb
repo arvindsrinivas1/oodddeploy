@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Name:</strong>
   <%= @book.name %>
@@ -26,9 +24,14 @@
   <% quantity = [] %>
   <% (1..@book.stock).each do |i| quantity << [i.to_s, i] %>
   <% end %>
-  <%= form_with url: "/transactions/new", method: :get do |form| %>
-  <%= select_tag(:quantity, options_for_select(quantity)) %>
-  <%= form.submit "Submit" %>
+  <%= form_with url: "/cart/add_to_cart", method: :get do |form| %>
+    <%= form.hidden_field :book_id, value: @book.id %>
+    <%= select_tag(:quantity, options_for_select(quantity)) %>
+  <% if @alreadyPresent %>
+  <%= form.submit "Update cart" %>
+  <% else %> 
+  <%= form.submit "Add to cart" %>
+  <% end %> 
   <% end %>
 </p>
 <% end %>

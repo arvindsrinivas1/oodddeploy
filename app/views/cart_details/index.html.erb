@@ -1,0 +1,56 @@
+<h1>Cart Details</h1>
+
+<style>
+         table, th, td {
+            border: 1px solid black;
+         }
+      </style>
+
+<table>
+  <thead>
+    <tr>
+      <th>Book Name</th>
+      <th>Quantity</th>
+      <th>Message</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% insufficientQuantity = false %>
+    <% @cart_details.each do |cart_detail| %>
+      <tr>
+        <td><%= cart_detail.book.name %></td>
+        <td><%= cart_detail.quantity %></td>
+        <% if cart_detail.book.stock < cart_detail.quantity %>
+          <% insufficientQuantity = true %>
+          <td>Someone else has bought this book. 
+          <br>
+          Edit quantity to proceed to transaction. 
+          </td>
+        <% elsif cart_detail.book.stock == 0 %>
+          <td>
+          No more stock left. 
+          <br>
+          Remove to proceed to transaction. 
+          </td>
+        <% else %>
+          <td></td>
+        <% end %>
+        <td>
+          <% if cart_detail.book.stock != 0 %>
+            <%= link_to 'Edit quantity', book_path(cart_detail.book) %>
+            <br>
+          <% end %>
+          <%= button_to 'Remove', cart_detail_path(cart_detail) ,method: :delete %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<% if @cartHasItems && !insufficientQuantity %>
+<%= link_to 'Checkout', new_purchase_url(cart_id: @cart_details.last.cart_id) %>
+<% end %>
+<%= link_to 'Home', root_path %>

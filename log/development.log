@@ -10005,3 +10005,147 @@ Processing by HomeController#index as HTML
 Completed 200 OK in 9ms (Views: 3.7ms | ActiveRecord: 4.1ms | Allocations: 1784)
 
 
+  [1m[35m (23.7ms)[0m  [1m[35mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL PRIMARY KEY)[0m
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE TABLE `ar_internal_metadata` (`key` varchar(255) NOT NULL PRIMARY KEY, `value` varchar(255), `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT GET_LOCK('8123750122524000825', 0)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Migrating to DeviseCreateUsers (20230201000225)
+  [1m[35m (4.6ms)[0m  [1m[35mCREATE TABLE `users` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `email` varchar(255) DEFAULT '' NOT NULL, `encrypted_password` varchar(255) DEFAULT '' NOT NULL, `reset_password_token` varchar(255), `reset_password_sent_at` datetime, `remember_created_at` datetime, `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[35m (16.2ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_users_on_email` ON `users` (`email`)[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_users_on_reset_password_token` ON `users` (`reset_password_token`)[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.6ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230201000225')[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to DeviseCreateViews (20230201000603)
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE TABLE `views` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `email` varchar(255) DEFAULT '' NOT NULL, `encrypted_password` varchar(255) DEFAULT '' NOT NULL, `reset_password_token` varchar(255), `reset_password_sent_at` datetime, `remember_created_at` datetime, `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[35m (3.9ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_views_on_email` ON `views` (`email`)[0m
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_views_on_reset_password_token` ON `views` (`reset_password_token`)[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230201000603')[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateBooks (20230203222539)
+  [1m[35m (5.9ms)[0m  [1m[35mCREATE TABLE `books` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255), `author` varchar(255), `publisher` varchar(255), `price` decimal, `stock` int, `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230203222539')[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateReviews (20230203223030)
+  [1m[35m (3.2ms)[0m  [1m[35mCREATE TABLE `reviews` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `rating` int, `review` text, `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230203223030')[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddKeysToReviews (20230203223713)
+  [1m[35m (3.9ms)[0m  [1m[35mALTER TABLE `reviews` ADD `user_id` bigint NOT NULL[0m
+  [1m[35m (3.2ms)[0m  [1m[35mCREATE INDEX `index_reviews_on_user_id` ON `reviews` (`user_id`)[0m
+  [1m[35m (7.2ms)[0m  [1m[35mALTER TABLE `reviews` ADD CONSTRAINT `fk_rails_74a66bd6c5`
+FOREIGN KEY (`user_id`)
+  REFERENCES `users` (`id`)
+[0m
+  [1m[35m (5.0ms)[0m  [1m[35mALTER TABLE `reviews` ADD `book_id` bigint NOT NULL[0m
+  [1m[35m (3.8ms)[0m  [1m[35mCREATE INDEX `index_reviews_on_book_id` ON `reviews` (`book_id`)[0m
+  [1m[35m (8.1ms)[0m  [1m[35mALTER TABLE `reviews` ADD CONSTRAINT `fk_rails_924a0b30ca`
+FOREIGN KEY (`book_id`)
+  REFERENCES `books` (`id`)
+[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230203223713')[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to DeviseCreateAdmins (20230214211802)
+  [1m[35m (3.6ms)[0m  [1m[35mCREATE TABLE `admins` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `email` varchar(255) DEFAULT '' NOT NULL, `encrypted_password` varchar(255) DEFAULT '' NOT NULL, `reset_password_token` varchar(255), `reset_password_sent_at` datetime, `remember_created_at` datetime, `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[35m (3.4ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_admins_on_email` ON `admins` (`email`)[0m
+  [1m[35m (3.1ms)[0m  [1m[35mCREATE UNIQUE INDEX `index_admins_on_reset_password_token` ON `admins` (`reset_password_token`)[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230214211802')[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePurchases (20230214214619)
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE TABLE `purchases` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `credit_card` decimal, `phone_number` decimal, `address` text, `total_price` decimal, `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230214214619')[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateCarts (20230214214711)
+  [1m[35m (3.0ms)[0m  [1m[35mCREATE TABLE `carts` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230214214711')[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateCartDetails (20230214214819)
+  [1m[35m (4.1ms)[0m  [1m[35mCREATE TABLE `cart_details` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `quantity` int, `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230214214819')[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddKeysToCartDetails (20230214214913)
+  [1m[35m (2.0ms)[0m  [1m[35mALTER TABLE `cart_details` ADD `book_id` bigint NOT NULL[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE INDEX `index_cart_details_on_book_id` ON `cart_details` (`book_id`)[0m
+  [1m[35m (6.1ms)[0m  [1m[35mALTER TABLE `cart_details` ADD CONSTRAINT `fk_rails_61352dd9c5`
+FOREIGN KEY (`book_id`)
+  REFERENCES `books` (`id`)
+[0m
+  [1m[35m (2.8ms)[0m  [1m[35mALTER TABLE `cart_details` ADD `cart_id` bigint NOT NULL[0m
+  [1m[35m (2.8ms)[0m  [1m[35mCREATE INDEX `index_cart_details_on_cart_id` ON `cart_details` (`cart_id`)[0m
+  [1m[35m (9.0ms)[0m  [1m[35mALTER TABLE `cart_details` ADD CONSTRAINT `fk_rails_cacf5c53ab`
+FOREIGN KEY (`cart_id`)
+  REFERENCES `carts` (`id`)
+[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230214214913')[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddKeysToPurchase (20230214214943)
+  [1m[35m (2.1ms)[0m  [1m[35mALTER TABLE `purchases` ADD `user_id` bigint NOT NULL[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE INDEX `index_purchases_on_user_id` ON `purchases` (`user_id`)[0m
+  [1m[35m (9.7ms)[0m  [1m[35mALTER TABLE `purchases` ADD CONSTRAINT `fk_rails_2888c5cba9`
+FOREIGN KEY (`user_id`)
+  REFERENCES `users` (`id`)
+[0m
+  [1m[35m (3.4ms)[0m  [1m[35mALTER TABLE `purchases` ADD `cart_id` bigint NOT NULL[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE INDEX `index_purchases_on_cart_id` ON `purchases` (`cart_id`)[0m
+  [1m[35m (7.8ms)[0m  [1m[35mALTER TABLE `purchases` ADD CONSTRAINT `fk_rails_7ccaadabab`
+FOREIGN KEY (`cart_id`)
+  REFERENCES `carts` (`id`)
+[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230214214943')[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddKeysToUsers (20230214220522)
+  [1m[35m (4.0ms)[0m  [1m[35mALTER TABLE `users` ADD `username` varchar(255)[0m
+  [1m[35m (4.3ms)[0m  [1m[35mALTER TABLE `users` ADD `name` varchar(255)[0m
+  [1m[35m (4.4ms)[0m  [1m[35mALTER TABLE `users` ADD `credit_card` varchar(16)[0m
+  [1m[35m (3.8ms)[0m  [1m[35mALTER TABLE `users` ADD `phone_number` varchar(10)[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230214220522')[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddKeysToAdmins (20230214220545)
+  [1m[35m (2.3ms)[0m  [1m[35mALTER TABLE `admins` ADD `username` varchar(255)[0m
+  [1m[35m (1.9ms)[0m  [1m[35mALTER TABLE `admins` ADD `name` varchar(255)[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.0ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230214220545')[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddKeysToCart (20230214220724)
+  [1m[35m (4.9ms)[0m  [1m[35mALTER TABLE `carts` ADD `user_id` bigint NOT NULL[0m
+  [1m[35m (3.7ms)[0m  [1m[35mCREATE INDEX `index_carts_on_user_id` ON `carts` (`user_id`)[0m
+  [1m[35m (8.5ms)[0m  [1m[35mALTER TABLE `carts` ADD CONSTRAINT `fk_rails_ea59a35211`
+FOREIGN KEY (`user_id`)
+  REFERENCES `users` (`id`)
+[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230214220724')[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddKeyToUsers (20230215004238)
+  [1m[35m (5.5ms)[0m  [1m[35mALTER TABLE `users` ADD `address` varchar(255)[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230215004238')[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddKeyToReviews (20230215063537)
+  [1m[35m (2.3ms)[0m  [1m[35mALTER TABLE `reviews` ADD `admin_id` bigint[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE INDEX `index_reviews_on_admin_id` ON `reviews` (`admin_id`)[0m
+  [1m[35m (8.2ms)[0m  [1m[35mALTER TABLE `reviews` ADD CONSTRAINT `fk_rails_6357cafba9`
+FOREIGN KEY (`admin_id`)
+  REFERENCES `admins` (`id`)
+[0m
+  [1m[35m (6.3ms)[0m  [1m[35mALTER TABLE `reviews` CHANGE `user_id` `user_id` bigint DEFAULT NULL[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20230215063537')[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.7ms)[0m  [1m[32mINSERT INTO `ar_internal_metadata` (`key`, `value`, `created_at`, `updated_at`) VALUES ('environment', 'development', '2023-02-15 22:56:32.730171', '2023-02-15 22:56:32.730171')[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT RELEASE_LOCK('8123750122524000825')[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
