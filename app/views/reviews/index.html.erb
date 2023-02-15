@@ -1,0 +1,41 @@
+<%= form_tag("/reviews", method: "get") do %>
+  <%= label_tag(:author, "Author") %>
+  <%= select_tag(:author, options_from_collection_for_select(@people, "id", "email", @selectedUser),  :include_blank => true) %>
+  <%= submit_tag("Filter By Author") %>
+<% end %>
+
+<%= form_tag("/reviews", method: "get") do %>
+  <%= label_tag(:book, "Book") %>
+  <%= select_tag(:book, options_from_collection_for_select(@book, "id", "name", @selectedBook),  :include_blank => true) %>
+  <%= submit_tag("Filter By Book") %>
+<% end %>
+
+<h1>Reviews</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Rating</th>
+      <th>Review</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reviews.each do |review| %>
+      <tr>
+        <td><%= review.rating %></td>
+        <td><%= review.review %></td>
+        <td><%= link_to 'Show', review %></td>
+        <% if (current_admin.present? or review.user_id == current_user.id) %>
+          <td><%= link_to 'Edit', edit_review_path(review) %></td>
+          <td><%= button_to 'Delete', review_path(review), method: :delete%></td>
+        <% else %>
+          <td> </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

@@ -1,0 +1,52 @@
+<%= form_with(model: review) do |form| %>
+  <% if review.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(review.errors.count, "error") %> prohibited this review from being saved:</h2>
+
+      <ul>
+        <% review.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% if review.persisted? %>
+    <% if review.admin_id %>
+      <div class="field">
+      <%= form.hidden_field :admin_id, value: review.admin_id %>
+      </div>
+    <% else %>
+      <div class="field">
+      <%= form.hidden_field :user_id, value: review.user_id %>
+      </div>
+    <% end %>
+  <% else %>
+    <% if current_user.present? %>
+      <div class="field">
+        <%= form.hidden_field :user_id, value: current_user.id %>
+      </div>
+    <% elsif current_admin.present? %>
+      <div class="field">
+        <%= form.hidden_field :admin_id, value: current_admin.id %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="field">
+    <%= form.hidden_field :book_id, value: @book %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rating %>
+    <%= form.number_field :rating %>
+  </div>
+
+  <div class="field">
+    <%= form.label :review %>
+    <%= form.text_area :review %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

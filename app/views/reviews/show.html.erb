@@ -1,0 +1,27 @@
+<p>
+  <% if @user %>
+    <strong>User:</strong>
+    <%= @user.email %>
+  <% else %>
+    <strong>Admin:</strong>
+    <%= @admin.email %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Book Name:</strong>
+  <%= @book.name %>
+</p>
+
+<p>
+  <strong>Rating:</strong>
+  <%= @review.rating %>
+</p>
+
+<p>
+  <strong>Review:</strong>
+  <%= @review.review %>
+</p>
+
+<%= link_to 'Edit', edit_review_path(@review) %> |
+<%= link_to 'Back', reviews_path %>
