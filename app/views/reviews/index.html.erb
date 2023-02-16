@@ -12,7 +12,10 @@
 
 <%= link_to 'Display all reviews', reviews_path %>
 <br>
-<%= link_to 'Display my reviews', reviews_path(author: current_user.id) %>
+
+<% if current_user.present? %>
+  <%= link_to 'Display my reviews', reviews_path(author: current_user.id) %>
+<% end %>
 
 <h1>Reviews</h1>
 <table>
