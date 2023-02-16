@@ -36,7 +36,7 @@
         <td><%= @ratings[i] %></td>
         <% i = i + 1 %>
         <% if book.stock != 0 && current_user.present? %>
-          <td><%= link_to 'Buy', book_path(book) %></td>
+          <td><%= link_to 'Buy/Show', book_path(book) %></td>
         <% else %>
           <td></td>
         <% end %>

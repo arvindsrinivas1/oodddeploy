@@ -27,11 +27,15 @@
   <%= form_with url: "/cart/add_to_cart", method: :get do |form| %>
     <%= form.hidden_field :book_id, value: @book.id %>
     <%= select_tag(:quantity, options_for_select(quantity)) %>
-  <% if @alreadyPresent %>
-  <%= form.submit "Update cart" %>
-  <% else %> 
-  <%= form.submit "Add to cart" %>
-  <% end %> 
+
+  <% unless @is_a_admin %>
+    <% if @alreadyPresent %>
+    <%= form.submit "Update cart" %>
+    <% else %> 
+    <%= form.submit "Add to cart" %>
+    <% end %>
+  <% end %>
+
   <% end %>
 </p>
 <% end %>

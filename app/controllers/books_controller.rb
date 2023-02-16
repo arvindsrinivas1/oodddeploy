@@ -40,12 +40,17 @@ class BooksController < ApplicationController
 
   # GET /books/1 or /books/1.json
   def show
-    cart = Cart.where(user_id: current_user.id).order("created_at").last
-    cart_detail = CartDetail.where(cart_id: cart.id, book_id: @book.id)
-    if cart_detail.empty?
-      @alreadyPresent = false 
-    else
-      @alreadyPresent = true 
+    if current_admin.present?
+      @is_a_admin = true
+    elsif current_user.present?
+      @is_a_admin = false
+      cart = Cart.where(user_id: current_user.id).order("created_at").last
+      cart_detail = CartDetail.where(cart_id: cart.id, book_id: @book.id)
+      if cart_detail.empty?
+        @alreadyPresent = false 
+      else
+        @alreadyPresent = true 
+      end
     end
   end
 
