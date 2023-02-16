@@ -12,7 +12,7 @@ class PurchasesController < ApplicationController
 
   # GET /purchases/new
   def new
-    @cart_id = Cart.where(user_id: current_user.id).order("created_at").last
+    @cart_id = Cart.where(user_id: current_user.id).order("created_at").last.id
     cart_details = CartDetail.where(cart_id: @cart_id).map(&:quantity)
     book_prices = CartDetail.where(cart_id: @cart_id).map(&:book).map(&:price)
     @total_price = cart_details.zip(book_prices).map{|x, y| x * y}.inject(:+)
