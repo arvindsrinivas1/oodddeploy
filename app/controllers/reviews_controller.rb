@@ -13,6 +13,10 @@ class ReviewsController < ApplicationController
       @reviews = Review.where(book_id: params[:book])
       @selectedBook = params[:book]
     end
+    @book_names = []
+    @reviews.each do |r|
+      @book_names.push(Book.find_by(id: r.book_id).name)
+    end
     @people = User.all
     @book = Book.all
   end

@@ -3,10 +3,38 @@ class BooksController < ApplicationController
 
   # GET /books or /books.json
   def index
+    @filtered = false
     if(params[:author].nil? or params[:author].empty?)
       @books = Book.all
     else
+      @filtered = true
       @books = Book.where(author: params[:author])
+    end
+
+    @ratings = []
+    if(params[:rating].present?)
+      @filtered = true
+      booksAboveRating = []
+      @books.each do |b|
+        reviews = Review.where(book_id: b.id)
+        if(reviews.present?)
+          rating = (reviews.map(&:rating).inject(:+).to_f)/reviews.size
+          if(rating >= params[:rating].to_f)
+            booksAboveRating.push(b)
+            @ratings.push(rating)
+          end
+        end
+      end
+      @books = booksAboveRating
+    else
+      @books.each do |b|
+        reviews = Review.where(book_id: b.id)
+        if(reviews.empty?)
+          @ratings.push("No reviews yet")
+        else 
+          @ratings.push((reviews.map(&:rating).inject(:+).to_f)/reviews.size)
+        end
+      end
     end
   end
 

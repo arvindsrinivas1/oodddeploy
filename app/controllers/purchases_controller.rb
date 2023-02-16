@@ -27,15 +27,20 @@ class PurchasesController < ApplicationController
   def create
     @purchase = Purchase.new(purchase_params)
     quantity_details = CartDetail.where(cart_id: purchase_params[:cart_id]).map(&:quantity)
-    puts "qd: ", quantity_details
     book_ids = CartDetail.where(cart_id: purchase_params[:cart_id]).map(&:book_id)
-    puts "bi: ", book_ids
     books = Book.where(id: book_ids)
-    puts "books: ", books
 
     books.each_with_index do |b, i| 
       books[i].stock = books[i].stock - quantity_details[i]
-      books[i].save!
+      if books[i].stock < 0
+        flash[:notice] = 'Someone else checked out before; please update quantities to continue with purchase!'
+        redirect_to cart_details_path
+        return
+      end
+    end
+
+    books.each do |b|
+      b.save!
     end
 
     respond_to do |format|

@@ -79,6 +79,21 @@ ActiveRecord::Schema.define(version: 2023_02_15_063537) do
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
+  create_table "transactions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "transaction_number", limit: 10
+    t.string "credit_card_number", limit: 16
+    t.string "address"
+    t.string "phone_no", limit: 10
+    t.integer "quantity"
+    t.decimal "total_price", precision: 10
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.bigint "book_id", null: false
+    t.index ["book_id"], name: "index_transactions_on_book_id"
+    t.index ["user_id"], name: "index_transactions_on_user_id"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -116,4 +131,6 @@ ActiveRecord::Schema.define(version: 2023_02_15_063537) do
   add_foreign_key "reviews", "admins"
   add_foreign_key "reviews", "books"
   add_foreign_key "reviews", "users"
+  add_foreign_key "transactions", "books"
+  add_foreign_key "transactions", "users"
 end

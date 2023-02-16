@@ -38,7 +38,7 @@
 
   <div class="field">
     <%= form.label :credit_card %>
-    <%= form.text_field :credit_card %>
+    <%= form.text_field :credit_card, minlength: 16, maxlength: 16, required: true %>
   </div>
 
   <div class="field">
