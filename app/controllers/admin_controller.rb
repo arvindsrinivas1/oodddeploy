@@ -11,8 +11,10 @@ class AdminController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
+    admin_params_empty_pass = admin_params.reject {|k, v| v == "" and k == 'password'}
     respond_to do |format|
-      if @admin.update(admin_params)
+      if @admin.update(admin_params_empty_pass)
+        sign_in(@admin, :bypass => true)
         format.html { redirect_to admin_url(@admin), notice: "Admin was successfully updated." }
         format.json { render :show, status: :ok, location: @admin }
       else

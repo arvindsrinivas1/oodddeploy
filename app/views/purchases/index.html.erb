@@ -1,5 +1,11 @@
 <p id="notice"><%= notice %></p>
 
+<style>
+         table, th, td {
+            border: 1px solid black;
+         }
+</style>
+
 <h1>Purchases</h1>
 
 <table>
@@ -8,18 +14,25 @@
       <th>Credit card</th>
       <th>Phone number</th>
       <th>Address</th>
+      <th>Books</th>
       <th>Total price</th>
-      <th colspan="3"></th>
     </tr>
   </thead>
-
+  <% i = 0 %>
   <tbody>
     <% @purchases.each do |purchase| %>
       <tr>
         <td><%= purchase.credit_card %></td>
         <td><%= purchase.phone_number %></td>
         <td><%= purchase.address %></td>
+        <td>
+          <% @books[i].each do |book| %>
+            <%= book[0] %>: <%= book[1] %>
+            <br>
+          <% end %>
+        </td>
         <td><%= purchase.total_price %></td>
+        <% i = i + 1 %>
       </tr>
     <% end %>
   </tbody>
@@ -27,3 +40,5 @@
 
 <br>
 <%= link_to 'Home', root_path %>
+<br>
+<%= link_to 'Logout', destroy_user_session_path %>

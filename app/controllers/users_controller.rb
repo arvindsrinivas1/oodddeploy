@@ -1,5 +1,13 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :authenticate_valid_user!, only: %i[ show edit update destroy ]
+
+
+  def authenticate_valid_user!
+    if current_user.present? and current_user.id != @user.id
+      redirect_to root_path, alert: "Sorry, you are not allowed to access/modify that page!"
+    end
+  end
 
   # GET /users or /users.json
   def index
@@ -36,9 +44,10 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    non_empty_user_params = user_params.reject {|k, v| v == ""}
+    user_params_empty_pass = user_params.reject {|k, v| v == "" and k == 'password'}
     respond_to do |format|
-      if @user.update(non_empty_user_params)
+      if @user.update(user_params_empty_pass)
+        sign_in(@user, :bypass => true)
         format.html { redirect_to user_url(@user), notice: "User was successfully updated." }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -50,6 +59,7 @@ class UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
+    debugger
     if current_user.present? and current_user.id == @user.id
       @user.destroy
       redirect_to destroy_user_session_path

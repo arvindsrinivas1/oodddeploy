@@ -4,6 +4,16 @@ class PurchasesController < ApplicationController
   # GET /purchases or /purchases.json
   def index
     @purchases = Purchase.where(user_id: current_user.id)
+    @books = []
+    @purchases.each do |p|
+      cart_details = CartDetail.where(cart_id: p.cart_id)
+      temp = []
+      cart_details.each do |cd|
+        temp.push([cd.book.name, cd.quantity])
+      end
+      @books.push(temp) 
+    end
+    puts "here", @books
   end
 
   # GET /purchases/1 or /purchases/1.json
@@ -17,6 +27,25 @@ class PurchasesController < ApplicationController
     book_prices = CartDetail.where(cart_id: @cart_id).map(&:book).map(&:price)
     @total_price = cart_details.zip(book_prices).map{|x, y| x * y}.inject(:+)
     @purchase = Purchase.new
+
+    values_to_check = [:credit_card, :address, :phone_number]
+    @values_to_notify = []
+
+    # Prefill values else notify
+    values_to_check.each do |val|
+      unless current_user.send(val).nil? or current_user.send(val).empty?
+        @purchase.send((val.to_s + '=').to_sym, current_user.send(val))
+      else
+        @values_to_notify << val
+      end
+    end
+
+    user = User.find_by(id: current_user.id)
+    @credit_card = user.credit_card.to_s
+    @phone_number = user.phone_number
+    @address = user.address
+
+    puts @credit_card
   end
 
   # GET /purchases/1/edit
@@ -42,7 +71,6 @@ class PurchasesController < ApplicationController
     books.each do |b|
       b.save!
     end
-
     respond_to do |format|
       if @purchase.save
         format.html { redirect_to purchase_url(@purchase), notice: "Purchase was successfully created." }

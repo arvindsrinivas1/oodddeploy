@@ -1,0 +1,65 @@
+/* line 16, app/assets/stylesheets/home.scss */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+}
+
+/* line 20, app/assets/stylesheets/home.scss */
+.info {
+  border: 1px solid;
+  margin: 10px 0px;
+  padding: 15px 10px 15px 50px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  color: #00529B;
+  background-color: #BDE5F8;
+  background-image: url("https://i.imgur.com/ilgqWuX.png");
+}
+
+/* line 30, app/assets/stylesheets/home.scss */
+.success {
+  border: 1px solid;
+  margin: 10px 0px;
+  padding: 15px 10px 15px 50px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  color: #4F8A10;
+  background-color: #DFF2BF;
+  background-image: url("https://i.imgur.com/Q9BGTuy.png");
+}
+
+/* line 40, app/assets/stylesheets/home.scss */
+.warning {
+  border: 1px solid;
+  margin: 10px 0px;
+  padding: 15px 10px 15px 50px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  color: #9F6000;
+  background-color: #FEEFB3;
+  background-image: url("https://i.imgur.com/Z8q7ww7.png");
+}
+
+/* line 50, app/assets/stylesheets/home.scss */
+.error {
+  border: 1px solid;
+  margin: 10px 0px;
+  padding: 15px 10px 15px 50px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  color: #D8000C;
+  background-color: #FFBABA;
+  background-image: url("https://i.imgur.com/GnyDvKN.png");
+}
+
+/* line 60, app/assets/stylesheets/home.scss */
+.validation {
+  border: 1px solid;
+  margin: 10px 0px;
+  padding: 15px 10px 15px 50px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  color: #D63301;
+  background-color: #FFCCBA;
+  background-image: url("https://i.imgur.com/GnyDvKN.png");
+}

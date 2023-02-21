@@ -61,3 +61,7 @@
 <% if(current_user.present? or current_admin.present?) %>
       <%= link_to 'Home', root_path %>
 <% end %>
+<br>
+<%= link_to 'View Cart', cart_details_path %>
+<br>
+<%= link_to 'Logout', destroy_user_session_path %>

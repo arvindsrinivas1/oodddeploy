@@ -1,21 +1,35 @@
 class ReviewsController < ApplicationController
   before_action :set_review, only: %i[ show edit update destroy ]
+  before_action :authenticate_valid_user!, only: %i[edit update destroy ]
+
+
+  def authenticate_valid_user!
+    @review_user_id = @review.user_id
+
+    # If it is an admin, the if condition would fail and we will be able to access
+    # If it is an user and the review user is different, then we redirect with notice
+    if current_user.present? and current_user.id != @review_user_id
+      redirect_to root_path, alert: "Sorry, you are not allowed to access/modify that page!"
+    end
+  end
 
   # GET /reviews or /reviews.json
   def index
     @reviews = Review.all
     @selectedUser = ""
     @selectedBook = ""
-    if(!params[:author].nil?)
-      @reviews = Review.where(user_id: params[:author])
-      @selectedUser = params[:author]
-    elsif(!params[:book].nil?)
+    if(params[:user].present?)
+      @reviews = Review.where(user_id: params[:user])
+      @selectedUser = params[:user]
+    elsif(params[:book].present?)
       @reviews = Review.where(book_id: params[:book])
       @selectedBook = params[:book]
     end
     @book_names = []
+    @user_names = []
     @reviews.each do |r|
       @book_names.push(Book.find_by(id: r.book_id).name)
+      @user_names.push(User.find_by(id: r.user_id).username)
     end
     @people = User.all
     @book = Book.all

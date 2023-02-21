@@ -11,6 +11,19 @@
     </div>
   <% end %>
   
+  <% unless @values_to_notify.empty? %>
+    <div class="empVal" style="border-style: solid;">
+      <p> The following values are empty and hence haven't been prefilled: </p>
+      <ul>
+      <% @values_to_notify.each do |val| %>
+        <li><%= val.to_s.camelize %></li>
+      <% end %>
+      </ul>
+      <p> Note: Edit user profile to set them</p>
+    </div>
+  <% end %>
+
+  </br>
   <div class="field">
     <%= form.hidden_field :user_id, value: current_user.id %>
   </div>
@@ -21,17 +34,17 @@
 
   <div class="field">
     <%= form.label :credit_card %>
-    <%= form.text_field :credit_card %>
+    <%= form.text_field :credit_card, input_html: { value: '1' } %>
   </div>
 
   <div class="field">
     <%= form.label :phone_number %>
-    <%= form.text_field :phone_number %>
+    <%= form.text_field :phone_number, value: @phone_number %>
   </div>
 
   <div class="field">
     <%= form.label :address %>
-    <%= form.text_area :address %>
+    <%= form.text_area :address, value: @address %>
   </div>
 
   <div class="field">

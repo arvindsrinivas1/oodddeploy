@@ -19,7 +19,7 @@ class BooksController < ApplicationController
         reviews = Review.where(book_id: b.id)
         if(reviews.present?)
           rating = (reviews.map(&:rating).inject(:+).to_f)/reviews.size
-          if(rating >= params[:rating].to_f)
+          if(rating > params[:rating].to_f)
             booksAboveRating.push(b)
             @ratings.push(rating)
           end
@@ -30,7 +30,7 @@ class BooksController < ApplicationController
       @books.each do |b|
         reviews = Review.where(book_id: b.id)
         if(reviews.empty?)
-          @ratings.push("No reviews yet")
+          @ratings.push(0)
         else 
           @ratings.push((reviews.map(&:rating).inject(:+).to_f)/reviews.size)
         end
