@@ -59,7 +59,6 @@ class UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
-    debugger
     if current_user.present? and current_user.id == @user.id
       @user.destroy
       redirect_to destroy_user_session_path
