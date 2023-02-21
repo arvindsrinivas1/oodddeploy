@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :carts
   resources :purchases
   get "/cart/add_to_cart", to: "carts#add_to_cart"
+  post "/create_user", to: "admin#create_user"
   devise_for :users
   devise_for :views
   root to: "home#index"

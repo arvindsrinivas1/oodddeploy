@@ -1,6 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :set_review, only: %i[ show edit update destroy ]
-  before_action :authenticate_valid_user!, only: %i[edit update destroy ]
+  before_action :authenticate_valid_user!, only: %i[edit update destroy]
 
 
   def authenticate_valid_user!
@@ -8,7 +8,7 @@ class ReviewsController < ApplicationController
 
     # If it is an admin, the if condition would fail and we will be able to access
     # If it is an user and the review user is different, then we redirect with notice
-    if current_user.present? and current_user.id != @review_user_id
+    if !(current_user.present? and current_user.id == @review_user_id)
       redirect_to root_path, alert: "Sorry, you are not allowed to access/modify that page!"
     end
   end
