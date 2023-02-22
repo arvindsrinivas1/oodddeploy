@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
 
   def authenticate_valid_user!
-    if !(current_user.present? and current_user.id == @user.id)
+    if current_user.present? and current_user.id != @user.id
       redirect_to root_path, alert: "Sorry, you are not allowed to access/modify that page!"
     end
   end

@@ -4,7 +4,11 @@ class AdminController < ApplicationController
 
 
   def authenticate_valid_admin!
-    if !(current_admin.present? and current_admin.id == @admin.id)
+    if current_admin.present?
+      if current_admin.id != @admin.id
+        redirect_to root_path, alert: "Sorry, you are not allowed to access/modify that page!"
+      end
+    else
       redirect_to root_path, alert: "Sorry, you are not allowed to access/modify that page!"
     end
   end
@@ -35,6 +39,7 @@ class AdminController < ApplicationController
 
   def create_user
     @new_user = User.new(user_params)
+    
     respond_to do |format|
       if @new_user.save
         format.html { redirect_to users_url, notice: "User was successfully created." }
