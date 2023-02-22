@@ -11,11 +11,6 @@
 <% end %>
 
 <%= link_to 'Display all reviews', reviews_path %>
-<br>
-
-<% if current_user.present? %>
-  <%= link_to 'Display my reviews', reviews_path(author: current_user.id) %>
-<% end %>
 
 <h1>Reviews</h1>
 <table>
@@ -50,8 +45,12 @@
 </table>
 
 <br>
-<%= link_to 'Home', root_path %>
+<%= link_to 'View Books', books_path %>
 <br>
-<%= link_to 'View Cart', cart_details_path %>
+<% unless current_admin.present? %>
+  <%= link_to 'View Cart', cart_details_path %>
+  <br>
+<% end %>
+<%= link_to 'Home', root_path %>
 <br>
 <%= link_to 'Logout', destroy_user_session_path %>

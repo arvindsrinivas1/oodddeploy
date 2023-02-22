@@ -40,10 +40,9 @@
 </p>
 <% end %>
 
-<!--<p>-->
-<!--  <strong>Stock:</strong>-->
-  <%#= @book.stock %>
-<!--</p>-->
 
-<!--<%#= link_to 'Edit', edit_book_path(@book) %> |-->
+<%= link_to 'Review this book', new_review_path(@book) %>
+<br>
 <%= link_to 'Back', books_path %>
+<br>
+<%= link_to 'Home', root_path %>

@@ -58,10 +58,14 @@
 <%= link_to 'View all books', books_path %>
 <br>
 <% end %>
+
+<%= link_to 'View All Reviews', reviews_path %>
+<br>
+<% unless current_admin.present? %>
+  <%= link_to 'View Cart', cart_details_path %><br>
+<% end %>
 <% if(current_user.present? or current_admin.present?) %>
       <%= link_to 'Home', root_path %>
 <% end %>
-<br>
-<%= link_to 'View Cart', cart_details_path %>
 <br>
 <%= link_to 'Logout', destroy_user_session_path %>

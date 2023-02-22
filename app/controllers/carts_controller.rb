@@ -12,7 +12,7 @@ class CartsController < ApplicationController
     else 
       cart_detail.update(quantity: params[:quantity])
       respond_to do |format|
-        format.html { redirect_to books_url(), notice: "Quantity was successfully updated." }
+        format.html { redirect_to cart_details_path, notice: "Quantity was successfully updated." }
       end
     end
   end  
